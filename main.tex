@@ -1,0 +1,236 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+
+% 推荐使用 xelatex 编译
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+% 字体配置（XeLaTeX）
+\usepackage{fontspec}
+\usepackage{unicode-math}
+
+% \setsansfont{TeX Gyre Heros}
+
+% \setCJKmainfont{Noto Serif CJK SC}
+% \setCJKsansfont{Noto Sans CJK SC}
+% \setCJKmonofont{Sarasa Mono SC}
+
+% \setmathfont{STIX Two Math}
+
+\usepackage{sysu}
+
+\title{中山大学课程汇报模板 Demo}
+\subtitle{Beamer Theme Customization 起步示例}
+\author{Kaito}
+\institute{Sun Yat-sen University}
+\date{\today}
+
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    frame=single,
+    showstringspaces=false,
+    tabsize=4,
+    keepspaces=true,
+    breaklines=true,
+    columns=fullflexible
+}
+
+\lstdefinestyle{sysucode}{
+    backgroundcolor=\color{black!2},
+    rulecolor=\color{black!25},
+    xleftmargin=0.8em,
+    xrightmargin=0.2em
+}
+
+\lstdefinestyle{focusline}{
+    backgroundcolor=\color{green!2},
+    numbersep=8pt,
+    aboveskip=0.5em,
+    belowskip=0.5em
+}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+    \vspace{-0.7em}
+    \begin{center}
+        \includegraphics[width=0.16\linewidth]{pic/avatar.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}{目录}
+    \tableofcontents
+\end{frame}
+
+\section{模板特色}
+
+\begin{frame}{这个 Demo 展示什么}
+    \begin{itemize}
+        \item 学校主色统一（SYSU 绿）
+        \item 页脚含作者、单位、标题与页码
+        \item block、列表、代码、公式、表格的统一样式
+        \item 支持文献引用（\texttt{ref.bib}）
+        \item 每个 section 自动弹出当前目录页
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{信息块示例}
+    \begin{block}{普通 block}
+        适合放定义、命题、关键描述。
+    \end{block}
+
+    \begin{exampleblock}{示例 block}
+        适合放例子、实验设置、实现步骤。
+    \end{exampleblock}
+
+    \begin{alertblock}{提醒 block}
+        适合放风险点、截止日期、容易出错的地方。
+    \end{alertblock}
+\end{frame}
+
+\section{排版示例}
+
+\begin{frame}{公式与排版}
+    线性回归常见目标函数：
+    $$
+    \min_{\mathbf{w}}\;\frac{1}{n}\sum_{i=1}^{n}\bigl(y_i-\mathbf{w}^{\top}\mathbf{x}_i\bigr)^2 + \lambda\lVert\mathbf{w}\rVert_2^2
+    $$
+    其中 $\lambda>0$ 控制正则强度。
+\end{frame}
+
+\begin{frame}[fragile]{代码示例}
+\begin{lstlisting}[language=Python,style=sysucode,emph={solve,lam,n_features}]
+def solve(xs, ys, lam=1e-3):
+    # ridge closed-form: w = (X^T X + lam I)^(-1) X^T y
+    import numpy as np
+    X = np.asarray(xs, dtype=float)
+    y = np.asarray(ys, dtype=float)
+    n_features = X.shape[1]
+    A = X.T @ X + lam * np.eye(n_features)
+    b = X.T @ y
+    return np.linalg.solve(A, b)
+\end{lstlisting}
+\end{frame}
+
+\section{Listings 进阶示例}
+
+\begin{frame}{\texttt{lstset} 里这些选项如何生效}
+    \begin{itemize}
+        \item \texttt{keywordstyle}: 作用在语言关键字（如 \texttt{def}, \texttt{return}, \texttt{if}）。
+        \item \texttt{stringstyle}: 作用在字符串字面量（如 \texttt{"SYSU"}）。
+        \item \texttt{emphstyle}: 只对 \texttt{emph={...}} 中声明的标识符生效。
+        \item 局部覆盖：每个 \texttt{lstlisting} 可单独传参数，临时改颜色、行号和 frame。
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{关键字 + 字符串 + emph 对照}
+\begin{lstlisting}[language=Python,style=sysucode,emph={train_epoch,loss,batch},emphstyle=\bfseries\color{deepred}]
+def train_epoch(model, loader):
+    total = 0.0
+    for batch in loader:
+        pred = model(batch["x"])
+        loss = ((pred - batch["y"]) ** 2).mean()
+        total += loss.item()
+    return "epoch done", total
+\end{lstlisting}
+\vspace{0.3em}
+\small 观察：\texttt{def/for/return} 用 \texttt{keywordstyle}，字符串用 \texttt{stringstyle}，\texttt{train\_epoch/loss/batch} 用 \texttt{emphstyle}。
+\end{frame}
+
+\begin{frame}[fragile]{局部覆盖示例（不改全局）}
+\begin{lstlisting}[
+    language=Python,
+    style=focusline,
+    frame=lines,
+    numbers=right,
+    keywordstyle=\color{blue!80!black}\bfseries,
+    stringstyle=\color{green!40!black},
+    emph={normalize,eps},
+    emphstyle=\color{red!75!black}\bfseries
+]
+def normalize(x, eps=1e-6):
+    msg = "safe normalize"
+    s = sum(v * v for v in x) ** 0.5
+    return [v / (s + eps) for v in x], msg
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{附加技巧：代码片段引用标签}
+\begin{lstlisting}[language=Python,style=sysucode,caption={一个可被引用的代码段},label={lst:toy}]
+def toy(a, b):
+    return a + b
+\end{lstlisting}
+在正文中可引用这个片段：Listing~\ref{lst:toy}。
+\end{frame}
+
+\begin{frame}{表格示例}
+    \begin{table}
+        \centering
+        \begin{tabular}{lcc}
+            \toprule
+            方法 & 精度(\%) & 耗时(ms) \\
+            \midrule
+            Baseline & 91.2 & 18.4 \\
+            Ours & 94.7 & 20.1 \\
+            Ours + Distill & 95.4 & 21.0 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\section{如何继续定制}
+
+\begin{frame}{你可以改哪些地方}
+    \begin{enumerate}
+        \item 在 \texttt{sysu.sty} 中改主色（\texttt{sysuGreen}）与页脚模板。
+        \item 在导言区加学校 logo（或校训）命令，统一 title page 风格。
+        \item 针对课程场景新增环境：定理、作业、实验结论等。
+        \item 固定 16:9 或 4:3 比例，形成你们组内统一模板。
+    \end{enumerate}
+\end{frame}
+
+\section{参考文献示例}
+
+\begin{frame}{在正文中引用}
+    你的文献信息写在 \texttt{ref.bib}，例如键值是 \texttt{origin}。
+
+    \vspace{0.6em}
+    在句子里引用：这个模板最初参考了 THU Beamer Theme\cite{origin}。
+
+    \vspace{0.4em}
+    学术论文引用示例：可读性编程思想最早由 Knuth 系统提出\cite{knuth1984}。
+
+    \vspace{0.6em}
+    也可以放在列表里：
+    \begin{itemize}
+        \item 相关工作：\cite{origin}
+        \item 经典文献：\cite{knuth1984}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{参考文献}
+    % 使用 BibTeX 数据库 ref.bib
+    \bibliographystyle{plain}
+    \bibliography{ref}
+\end{frame}
+
+\begin{frame}
+    \centering
+    \Large 谢谢！
+\end{frame}
+
+\end{document}

@@ -1,0 +1,68 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{sysu}[2026/04/08 SYSU Beamer Theme]
+
+\mode<presentation>
+
+\ProcessOptionsBeamer
+
+% ===== Theme skeleton =====
+\useoutertheme[subsection=false]{smoothbars}
+\useinnertheme{circles}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{caption}[numbered]
+
+% ===== SYSU brand colors =====
+\definecolor{sysuGreen}{HTML}{005826}
+\definecolor{sysuGreenDark}{HTML}{003E1B}
+\definecolor{sysuGreenLight}{HTML}{E8F3ED}
+
+\setbeamercolor{structure}{fg=sysuGreen}
+\setbeamercolor{titlelike}{fg=white,bg=sysuGreen}
+\setbeamercolor{frametitle}{fg=white,bg=sysuGreen}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+
+\setbeamercolor{palette primary}{fg=white,bg=sysuGreen}
+\setbeamercolor{palette secondary}{fg=white,bg=sysuGreenDark}
+\setbeamercolor{palette tertiary}{fg=white,bg=sysuGreen!80!black}
+\setbeamercolor{palette quaternary}{fg=white,bg=sysuGreen!65!black}
+
+% ===== Block style =====
+\setbeamercolor{block title}{fg=white,bg=sysuGreen}
+\setbeamerfont{block title}{series=\bfseries}
+\setbeamercolor{block body}{fg=black,bg=sysuGreenLight}
+\setbeamercolor{block title alerted}{fg=white,bg=red!70!black}
+\setbeamercolor{block body alerted}{fg=black,bg=red!10}
+\setbeamercolor{block title example}{fg=white,bg=sysuGreenDark}
+\setbeamercolor{block body example}{fg=black,bg=sysuGreen!10}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+% ===== Footline =====
+\newcommand{\frameofframes}{/}
+\newcommand{\setframeofframes}[1]{\renewcommand{\frameofframes}{#1}}
+
+\makeatletter
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line foot}\end{beamercolorbox}
+  \begin{beamercolorbox}[ht=2.6ex,dp=1.1ex,leftskip=.35cm,rightskip=.35cm plus1fil]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+    \hfill
+    \usebeamerfont{institute in head/foot}\insertshortinstitute
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[ht=2.6ex,dp=1.1ex,leftskip=.35cm,rightskip=.35cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+    \hfill
+    \usebeamerfont{frame number}\insertframenumber~\frameofframes~\inserttotalframenumber
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line foot}\end{beamercolorbox}
+}
+\makeatother
+
+% ===== Section transition page =====
+\AtBeginSection[]{
+  \begin{frame}{目录}
+    \tableofcontents[currentsection,hideothersubsections]
+  \end{frame}
+}
+
+\mode<all>
