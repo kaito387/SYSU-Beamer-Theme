@@ -1,6 +1,6 @@
 # SYSU Beamer 模板
 
-一个简洁的中山大学课程汇报 Beamer 模板。
+一个简洁的中山大学课程汇报 Beamer 模板。魔改自 THU-Beamer。
 
 ## 文件说明
 
