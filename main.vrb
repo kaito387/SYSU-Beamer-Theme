@@ -1,6 +1,0 @@
-\frametitle{附加技巧：代码片段引用标签}
-\begin{lstlisting}[language=Python,style=sysucode,caption={一个可被引用的代码段},label={lst:toy}]
-def toy(a, b):
-    return a + b
-\end{lstlisting}
-在正文中可引用这个片段：Listing~\ref{lst:toy}。

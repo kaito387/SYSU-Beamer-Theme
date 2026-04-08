@@ -2,6 +2,8 @@
 
 一个简洁的中山大学课程汇报 Beamer 模板。魔改自 THU-Beamer。
 
+For personal use only. Takedown upon request.
+
 ## 文件说明
 
 - `main.tex`：主文档与示例内容
